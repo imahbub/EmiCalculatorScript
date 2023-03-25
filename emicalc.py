@@ -1,3 +1,10 @@
+# Mahbub is quite dumb at programming, be patient while reading the code. Contact him in Telegram @linuxhasan
+# I welcome your contribution to this piece of junk
+
+## Added input validation, with better error handling
+## Added instructions on how to use it
+## Added more descriptive errors
+
 print("How to use: \nEnter your EMI total amount, interest rate (in percentage), processing fee (in percentage) and minimum processing fee. It will calculate your EMI and your first EMI with processing fee included. \n\nFor example: Enter total amount: 10000 \nIn how many months do you want to pay off: 12, \nWhat is the interest rate in percentage: 11 \nWhat is the processing fee in percentage?: 2.95 \nWhat is the minimum processing fee?: 575. \n\nNote: From processing fee and minimum processing fee, whichever is bigger, will be added to calculation.")
 
 def Amount():
