@@ -1,35 +1,102 @@
-# EMI Calculator
+print("How to use: \nEnter your EMI total amount, interest rate (in percentage), processing fee (in percentage) and minimum processing fee. It will calculate your EMI and your first EMI with processing fee included. \n\nFor example: Enter total amount: 10000 \nIn how many months do you want to pay off: 12, \nWhat is the interest rate in percentage: 11 \nWhat is the processing fee in percentage?: 2.95 \nWhat is the minimum processing fee?: 575. \n\nNote: From processing fee and minimum processing fee, whichever is bigger, will be added to calculation.")
 
-def emiCalc():
-  
-    print("Note: If you use it to calculate 0% interest EMIs, then enter 0 as interest rate, processing fee and also minimum processing fee")
-    
-    TotalValue = float(input("How much is the total price you want to convert to EMI?: ৳"))
-    InterestRate = float(input("How much is the interest rate in percentage?: "))
-    EmiMonth = float(input("How many months for the EMI payoff?: "))
-    ProcessingFee = float(input("How much is the processing fee in percentage?: "))
-    MinProcessingFee = float(input("How much is the minimum processing fee?: ৳"))
+def Amount():
 
-    if 0 >= InterestRate:
-        TotalValueWithInterest = TotalValue
-    elif 0 < InterestRate:
-        p = TotalValue
-        n = EmiMonth
-        r = InterestRate / 12 / 100
-        EmiAmount = p * r * (1+r) ** n / ((1+r) ** n - 1)
+    while True:
+        amount = input("Enter total amount: ")
+        try:
+            amount = float(amount)
+            if amount > 0:
+                break
+            else:
+                print("Amount must be higher than", amount)
+        except:
+            print("Please enter numbers only. Decimals are allowed")
     
-    EmiRemainder = EmiAmount % EmiMonth
-    print("Your EMI amount is: ৳%.2f" % EmiAmount, "(EMI remainder is: ৳%.2f" % EmiRemainder, ")")
-    
-    FstEmiProcFee = EmiAmount / 100 * ProcessingFee
+    return amount
 
-    if FstEmiProcFee > MinProcessingFee:
-        FstEmiProcFeeTotal = FstEmiProcFee + EmiAmount
+def EmiMonth():
+    while True:
+        emi_month = input("In how many months do you want to pay off?: ")
+        try:
+            emi_month = int(emi_month)
+            if emi_month > 0:
+                break
+            else:
+                print("EMI Month should be higher than 0 (usual terms are 3,6,12,24,36 months)")
+        except:
+            print("Please enter integers only (no decimals). For example: 3, and not 3.5")
+
+    return emi_month
+
+def InterestRate():
+    while True:
+        interest_rate = input("What is the interest rate in percentage?: ")
+        try:
+            interest_rate = float(interest_rate)
+            if interest_rate > 0:
+                break
+            else:
+                interest_rate = 0
+                break
+        except:
+            print("Please enter numbers only. Decimals are allowed")
+        
+    return interest_rate
+
+def ProcessingFee():
+    while True:
+        processing_fee = input("What is the processing fee in percentage?: ")
+        try:
+            processing_fee = float(processing_fee)
+            if processing_fee > 0:
+                break
+            else:
+                processing_fee = 0
+                break
+        except:
+            print("Please enter numbers only. Decimals are allowed")
+
+    return processing_fee
+
+def MinProcFee():
+    while True:
+        min_proc_fee = input("What is the minimum processing fee?: ")
+        try:
+            min_proc_fee = float(min_proc_fee)
+            if min_proc_fee > 0:
+                break
+            else:
+                min_proc_fee = 0
+                break
+        except:
+            print("Please enter numbers only. Decimals are allowed")
+
+    return min_proc_fee
+
+def main():
+
+    amount = Amount()
+    emi_month = EmiMonth()
+    interest_rate = InterestRate()
+    processing_fee = ProcessingFee()
+    min_proc_fee = MinProcFee()
+
+    if interest_rate == 0:
+        EMIValue = amount / emi_month
     else:
-        FstEmiProcFeeTotal = EmiAmount + MinProcessingFee
+        Interest = interest_rate / 12 / 100
+        EMIValue = amount * Interest * (1 + Interest) ** emi_month / ((1+ Interest) ** emi_month - 1)
 
-    print("Your First EMI with processing fee is: ৳%.2f" % FstEmiProcFeeTotal)
+    print("Your payable monthly installment is: %.2f" % EMIValue)
 
-    return EmiAmount
+    processing_fee_amount = EMIValue / 100 *  processing_fee
 
-emiCalc()
+    if processing_fee_amount > min_proc_fee:
+        EmiWithProcFee = EMIValue + processing_fee_amount
+    else:
+        EmiWithProcFee = EMIValue + min_proc_fee
+
+    print("Your first EMI installment with processing fee will be: %.2f" % EmiWithProcFee)
+
+main()
